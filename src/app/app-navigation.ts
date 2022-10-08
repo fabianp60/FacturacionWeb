@@ -17,5 +17,15 @@ export const navigation = [
         path: '/tasks'
       }
     ]
+  },
+  {
+    text: 'Facturacion',
+    path: '/facturacion',
+    icon: 'money'
+  },
+  {
+    text: 'Reportes',
+    path: '/reportes',
+    icon: 'chart'
   }
 ];

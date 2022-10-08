@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 
 export class HomeComponent {
   constructor() {}
+
+  helloWorld() {
+    alert('Hello world!');
+  }
 }
