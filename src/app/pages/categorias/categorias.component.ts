@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
+import { DxDataGridComponent } from 'devextreme-angular';
 
 @Component({
   selector: 'app-categorias',
@@ -8,6 +9,8 @@ import { createStore } from 'devextreme-aspnet-data-nojquery';
 })
 export class CategoriasComponent implements OnInit {
   remoteDataSource: any;
+  @ViewChild('dataGridRef', { static: false }) dataGrid!: DxDataGridComponent;
+  selectedRowsData: any[] = [];
 
   constructor() { 
     let serviceUrl = "https://localhost:7254/api/Categoria";
@@ -18,6 +21,13 @@ export class CategoriasComponent implements OnInit {
         updateUrl: serviceUrl,
         deleteUrl: serviceUrl
     });
+  }
+
+  getCategoriaSelected() {
+    this.selectedRowsData = this.dataGrid.instance.getSelectedRowsData();
+    alert(this.selectedRowsData[0].nombreCategoria);
+    console.log(this.selectedRowsData);
+    console.log(this.dataGrid.instance.getSelectedRowKeys());
   }
 
   ngOnInit(): void {

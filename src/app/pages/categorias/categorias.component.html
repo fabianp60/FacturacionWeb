@@ -1,6 +1,6 @@
 <h2 class="content-block">Categorias</h2>
 
-<dx-data-grid class="dx-card wide-card"
+<dx-data-grid class="dx-card wide-card" #dataGridRef
   id="categoriasGrid"
   [dataSource]="remoteDataSource"
   [remoteOperations]="false"
@@ -8,8 +8,10 @@
   [focusedRowEnabled]="true"
   [focusedRowIndex]="0"
   [columnAutoWidth]="true"
-  [columnHidingEnabled]="true">
+  [columnHidingEnabled]="true"
+  [selectedRowKeys]="[1]">
 
+  <dxo-selection mode="single"></dxo-selection>
   <dxo-filter-row [visible]="true"></dxo-filter-row>
   <dxo-header-filter [visible]="true"></dxo-header-filter>
   <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
@@ -27,3 +29,7 @@
   <dxo-paging [pageSize]="5"></dxo-paging>
 
 </dx-data-grid>
+
+<div class="dx-card responsive-paddings">
+  <dx-button type="default" icon="money" text="Mostrar seleccionado" (onClick)="getCategoriaSelected()"></dx-button>
+</div>
