@@ -29,14 +29,14 @@ export class ItemVentaService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiItemVentaGet()` instead.
+   * To access only the response body, use `apiItemVentaGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiItemVentaGet$Response(params?: {
+  apiItemVentaGet$Plain$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Array<ItemVenta>>> {
 
     const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaGetPath, 'get');
     if (params) {
@@ -44,29 +44,72 @@ export class ItemVentaService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Array<ItemVenta>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiItemVentaGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiItemVentaGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiItemVentaGet(params?: {
+  apiItemVentaGet$Plain(params?: {
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Array<ItemVenta>> {
 
-    return this.apiItemVentaGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiItemVentaGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<ItemVenta>>) => r.body as Array<ItemVenta>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiItemVentaGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiItemVentaGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<ItemVenta>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<ItemVenta>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiItemVentaGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiItemVentaGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<ItemVenta>> {
+
+    return this.apiItemVentaGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<ItemVenta>>) => r.body as Array<ItemVenta>)
     );
   }
 
@@ -85,7 +128,7 @@ export class ItemVentaService extends BaseService {
     context?: HttpContext
     body?: ItemVenta
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaPostPath, 'post');
     if (params) {
@@ -99,7 +142,7 @@ export class ItemVentaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -114,10 +157,10 @@ export class ItemVentaService extends BaseService {
     context?: HttpContext
     body?: ItemVenta
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiItemVentaPost$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -128,15 +171,15 @@ export class ItemVentaService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiItemVentaIdGet()` instead.
+   * To access only the response body, use `apiItemVentaIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiItemVentaIdGet$Response(params: {
+  apiItemVentaIdGet$Plain$Response(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<ItemVenta>> {
 
     const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaIdGetPath, 'get');
     if (params) {
@@ -145,30 +188,76 @@ export class ItemVentaService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<ItemVenta>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiItemVentaIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiItemVentaIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiItemVentaIdGet(params: {
+  apiItemVentaIdGet$Plain(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<ItemVenta> {
 
-    return this.apiItemVentaIdGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiItemVentaIdGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<ItemVenta>) => r.body as ItemVenta)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiItemVentaIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiItemVentaIdGet$Json$Response(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<ItemVenta>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaIdGetPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<ItemVenta>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiItemVentaIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiItemVentaIdGet$Json(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<ItemVenta> {
+
+    return this.apiItemVentaIdGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<ItemVenta>) => r.body as ItemVenta)
     );
   }
 
@@ -188,7 +277,7 @@ export class ItemVentaService extends BaseService {
     context?: HttpContext
     body?: ItemVenta
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaIdPutPath, 'put');
     if (params) {
@@ -203,7 +292,7 @@ export class ItemVentaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -219,10 +308,10 @@ export class ItemVentaService extends BaseService {
     context?: HttpContext
     body?: ItemVenta
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiItemVentaIdPut$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -241,7 +330,7 @@ export class ItemVentaService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ItemVentaService.ApiItemVentaIdDeletePath, 'delete');
     if (params) {
@@ -255,7 +344,7 @@ export class ItemVentaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -270,10 +359,10 @@ export class ItemVentaService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiItemVentaIdDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 

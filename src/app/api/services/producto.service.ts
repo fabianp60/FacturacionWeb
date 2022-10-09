@@ -29,14 +29,14 @@ export class ProductoService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiProductoGet()` instead.
+   * To access only the response body, use `apiProductoGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiProductoGet$Response(params?: {
+  apiProductoGet$Plain$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Array<Producto>>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoGetPath, 'get');
     if (params) {
@@ -44,29 +44,72 @@ export class ProductoService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Array<Producto>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiProductoGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiProductoGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiProductoGet(params?: {
+  apiProductoGet$Plain(params?: {
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Array<Producto>> {
 
-    return this.apiProductoGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiProductoGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Producto>>) => r.body as Array<Producto>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiProductoGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiProductoGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<Producto>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Producto>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiProductoGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiProductoGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<Producto>> {
+
+    return this.apiProductoGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Producto>>) => r.body as Array<Producto>)
     );
   }
 
@@ -85,7 +128,7 @@ export class ProductoService extends BaseService {
     context?: HttpContext
     body?: Producto
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoPostPath, 'post');
     if (params) {
@@ -99,7 +142,7 @@ export class ProductoService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -114,10 +157,10 @@ export class ProductoService extends BaseService {
     context?: HttpContext
     body?: Producto
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiProductoPost$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -128,15 +171,15 @@ export class ProductoService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiProductoIdGet()` instead.
+   * To access only the response body, use `apiProductoIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiProductoIdGet$Response(params: {
+  apiProductoIdGet$Plain$Response(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Producto>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoIdGetPath, 'get');
     if (params) {
@@ -145,30 +188,76 @@ export class ProductoService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Producto>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiProductoIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiProductoIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiProductoIdGet(params: {
+  apiProductoIdGet$Plain(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Producto> {
 
-    return this.apiProductoIdGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiProductoIdGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Producto>) => r.body as Producto)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiProductoIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiProductoIdGet$Json$Response(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Producto>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoIdGetPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Producto>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiProductoIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiProductoIdGet$Json(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<Producto> {
+
+    return this.apiProductoIdGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Producto>) => r.body as Producto)
     );
   }
 
@@ -188,7 +277,7 @@ export class ProductoService extends BaseService {
     context?: HttpContext
     body?: Producto
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoIdPutPath, 'put');
     if (params) {
@@ -203,7 +292,7 @@ export class ProductoService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -219,10 +308,10 @@ export class ProductoService extends BaseService {
     context?: HttpContext
     body?: Producto
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiProductoIdPut$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -241,7 +330,7 @@ export class ProductoService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ProductoService.ApiProductoIdDeletePath, 'delete');
     if (params) {
@@ -255,7 +344,7 @@ export class ProductoService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -270,10 +359,10 @@ export class ProductoService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiProductoIdDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 

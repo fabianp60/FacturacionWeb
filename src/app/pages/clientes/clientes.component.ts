@@ -2,17 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
 
 @Component({
-  selector: 'app-facturacion',
-  templateUrl: './facturacion.component.html',
-  styleUrls: ['./facturacion.component.scss']
+  selector: 'app-clientes',
+  templateUrl: './clientes.component.html',
+  styleUrls: ['./clientes.component.scss']
 })
-export class FacturacionComponent implements OnInit {
+export class ClientesComponent implements OnInit {
   remoteDataSource: any;
 
-  constructor() {
-    let serviceUrl = "https://localhost:7254/api/Factura";
+  constructor() { 
+    let serviceUrl = "https://localhost:7254/api/Cliente";
     this.remoteDataSource  = createStore({
-        key: "numeroFactura",
+        key: "id",
         loadUrl: serviceUrl,
         insertUrl: serviceUrl,
         updateUrl: serviceUrl,

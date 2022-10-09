@@ -1,13 +1,13 @@
-<h2 class="content-block">Facturas</h2>
+<h2 class="content-block">Clientes</h2>
 
 <dx-data-grid class="dx-card wide-card"
-  id="facturasGrid"
+  id="clientesGrid"
   [dataSource]="remoteDataSource"
   [remoteOperations]="false"
   [showBorders]="true"
   [focusedRowEnabled]="true"
-  [focusedRowIndex]="0"
   [columnAutoWidth]="true"
+  [focusedRowIndex]="0"
   [columnHidingEnabled]="true">
 
   <dxo-filter-row [visible]="true"></dxo-filter-row>
@@ -21,10 +21,12 @@
     [allowUpdating]="true"
     [allowDeleting]="true"></dxo-editing> -->
 
-  <dxi-column dataField="numeroFactura" caption="Numero de Factura"></dxi-column>
-  <dxi-column dataField="fechaExpedicion" caption="Fecha de Expedición" dataType="date"></dxi-column>
-  <dxi-column dataField="clienteId" caption="Id de Cliente"></dxi-column>
-  <dxi-column dataField="itemsVenta" caption="Items Venta"></dxi-column>
+  <dxi-column dataField="id" caption="Id"></dxi-column>
+  <dxi-column dataField="nombre" caption="Nombre"></dxi-column>
+  <dxi-column dataField="apellido" caption="Apellido"></dxi-column>
+  <dxi-column dataField="telefono" caption="Telefono"></dxi-column>
+  <dxi-column dataField="email" caption="Email"></dxi-column>
+  <dxi-column dataField="fechaNacimiento" caption="Fecha de Nacimiento" dataType="date"></dxi-column>
   
   <dxo-paging [pageSize]="5"></dxo-paging>
 

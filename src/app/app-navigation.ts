@@ -5,23 +5,26 @@ export const navigation = [
     icon: 'home'
   },
   {
-    text: 'Examples',
-    icon: 'folder',
+    text: 'Facturación',
+    icon: 'money',
     items: [
       {
-        text: 'Profile',
-        path: '/profile'
+        text: 'Clientes',
+        path: '/clientes'
       },
       {
-        text: 'Tasks',
-        path: '/tasks'
+        text: 'Categorias',
+        path: '/categorias'
+      },
+      {
+        text: 'Productos',
+        path: '/productos'
+      },
+      {
+        text: 'Facturas',
+        path: '/facturacion'
       }
     ]
-  },
-  {
-    text: 'Facturación',
-    path: '/facturacion',
-    icon: 'money'
   },
   {
     text: 'Reportes',

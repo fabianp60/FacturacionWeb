@@ -29,14 +29,14 @@ export class ClienteService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiClienteGet()` instead.
+   * To access only the response body, use `apiClienteGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiClienteGet$Response(params?: {
+  apiClienteGet$Plain$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Array<Cliente>>> {
 
     const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClienteGetPath, 'get');
     if (params) {
@@ -44,29 +44,72 @@ export class ClienteService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Array<Cliente>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiClienteGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiClienteGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiClienteGet(params?: {
+  apiClienteGet$Plain(params?: {
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Array<Cliente>> {
 
-    return this.apiClienteGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiClienteGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Cliente>>) => r.body as Array<Cliente>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiClienteGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiClienteGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<Cliente>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClienteGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Cliente>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiClienteGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiClienteGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<Cliente>> {
+
+    return this.apiClienteGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Cliente>>) => r.body as Array<Cliente>)
     );
   }
 
@@ -85,7 +128,7 @@ export class ClienteService extends BaseService {
     context?: HttpContext
     body?: Cliente
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClientePostPath, 'post');
     if (params) {
@@ -99,7 +142,7 @@ export class ClienteService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -114,10 +157,10 @@ export class ClienteService extends BaseService {
     context?: HttpContext
     body?: Cliente
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiClientePost$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -128,15 +171,15 @@ export class ClienteService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiClienteIdGet()` instead.
+   * To access only the response body, use `apiClienteIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiClienteIdGet$Response(params: {
+  apiClienteIdGet$Plain$Response(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Cliente>> {
 
     const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClienteIdGetPath, 'get');
     if (params) {
@@ -145,30 +188,76 @@ export class ClienteService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Cliente>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiClienteIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiClienteIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiClienteIdGet(params: {
+  apiClienteIdGet$Plain(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Cliente> {
 
-    return this.apiClienteIdGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiClienteIdGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Cliente>) => r.body as Cliente)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiClienteIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiClienteIdGet$Json$Response(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Cliente>> {
+
+    const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClienteIdGetPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Cliente>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiClienteIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiClienteIdGet$Json(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<Cliente> {
+
+    return this.apiClienteIdGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Cliente>) => r.body as Cliente)
     );
   }
 
@@ -188,7 +277,7 @@ export class ClienteService extends BaseService {
     context?: HttpContext
     body?: Cliente
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClienteIdPutPath, 'put');
     if (params) {
@@ -203,7 +292,7 @@ export class ClienteService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -219,10 +308,10 @@ export class ClienteService extends BaseService {
     context?: HttpContext
     body?: Cliente
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiClienteIdPut$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -241,7 +330,7 @@ export class ClienteService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, ClienteService.ApiClienteIdDeletePath, 'delete');
     if (params) {
@@ -255,7 +344,7 @@ export class ClienteService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -270,10 +359,10 @@ export class ClienteService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiClienteIdDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 

@@ -29,14 +29,14 @@ export class FacturaService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiFacturaGet()` instead.
+   * To access only the response body, use `apiFacturaGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiFacturaGet$Response(params?: {
+  apiFacturaGet$Plain$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Array<Factura>>> {
 
     const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaGetPath, 'get');
     if (params) {
@@ -44,29 +44,72 @@ export class FacturaService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Array<Factura>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiFacturaGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiFacturaGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiFacturaGet(params?: {
+  apiFacturaGet$Plain(params?: {
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Array<Factura>> {
 
-    return this.apiFacturaGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiFacturaGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Factura>>) => r.body as Array<Factura>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiFacturaGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFacturaGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<Factura>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Factura>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiFacturaGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFacturaGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<Factura>> {
+
+    return this.apiFacturaGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Factura>>) => r.body as Array<Factura>)
     );
   }
 
@@ -85,7 +128,7 @@ export class FacturaService extends BaseService {
     context?: HttpContext
     body?: Factura
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaPostPath, 'post');
     if (params) {
@@ -99,7 +142,7 @@ export class FacturaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -114,10 +157,10 @@ export class FacturaService extends BaseService {
     context?: HttpContext
     body?: Factura
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiFacturaPost$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -128,15 +171,15 @@ export class FacturaService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiFacturaNumfacturaGet()` instead.
+   * To access only the response body, use `apiFacturaNumfacturaGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiFacturaNumfacturaGet$Response(params: {
+  apiFacturaNumfacturaGet$Plain$Response(params: {
     numfactura: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Factura>> {
 
     const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaNumfacturaGetPath, 'get');
     if (params) {
@@ -145,30 +188,76 @@ export class FacturaService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Factura>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiFacturaNumfacturaGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiFacturaNumfacturaGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiFacturaNumfacturaGet(params: {
+  apiFacturaNumfacturaGet$Plain(params: {
     numfactura: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Factura> {
 
-    return this.apiFacturaNumfacturaGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiFacturaNumfacturaGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Factura>) => r.body as Factura)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiFacturaNumfacturaGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFacturaNumfacturaGet$Json$Response(params: {
+    numfactura: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Factura>> {
+
+    const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaNumfacturaGetPath, 'get');
+    if (params) {
+      rb.path('numfactura', params.numfactura, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Factura>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiFacturaNumfacturaGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiFacturaNumfacturaGet$Json(params: {
+    numfactura: number;
+    context?: HttpContext
+  }
+): Observable<Factura> {
+
+    return this.apiFacturaNumfacturaGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Factura>) => r.body as Factura)
     );
   }
 
@@ -188,7 +277,7 @@ export class FacturaService extends BaseService {
     context?: HttpContext
     body?: Factura
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaNumfacturaPutPath, 'put');
     if (params) {
@@ -203,7 +292,7 @@ export class FacturaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -219,10 +308,10 @@ export class FacturaService extends BaseService {
     context?: HttpContext
     body?: Factura
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiFacturaNumfacturaPut$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -241,7 +330,7 @@ export class FacturaService extends BaseService {
     numfactura: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, FacturaService.ApiFacturaNumfacturaDeletePath, 'delete');
     if (params) {
@@ -255,7 +344,7 @@ export class FacturaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -270,10 +359,10 @@ export class FacturaService extends BaseService {
     numfactura: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiFacturaNumfacturaDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 

@@ -29,14 +29,14 @@ export class CategoriaService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiCategoriaGet()` instead.
+   * To access only the response body, use `apiCategoriaGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiCategoriaGet$Response(params?: {
+  apiCategoriaGet$Plain$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Array<Categoria>>> {
 
     const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaGetPath, 'get');
     if (params) {
@@ -44,29 +44,72 @@ export class CategoriaService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Array<Categoria>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiCategoriaGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiCategoriaGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiCategoriaGet(params?: {
+  apiCategoriaGet$Plain(params?: {
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Array<Categoria>> {
 
-    return this.apiCategoriaGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiCategoriaGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Categoria>>) => r.body as Array<Categoria>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCategoriaGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCategoriaGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<Categoria>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<Categoria>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCategoriaGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCategoriaGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<Categoria>> {
+
+    return this.apiCategoriaGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<Categoria>>) => r.body as Array<Categoria>)
     );
   }
 
@@ -85,7 +128,7 @@ export class CategoriaService extends BaseService {
     context?: HttpContext
     body?: Categoria
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaPostPath, 'post');
     if (params) {
@@ -99,7 +142,7 @@ export class CategoriaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -114,10 +157,10 @@ export class CategoriaService extends BaseService {
     context?: HttpContext
     body?: Categoria
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiCategoriaPost$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -128,15 +171,15 @@ export class CategoriaService extends BaseService {
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiCategoriaIdGet()` instead.
+   * To access only the response body, use `apiCategoriaIdGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiCategoriaIdGet$Response(params: {
+  apiCategoriaIdGet$Plain$Response(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<Categoria>> {
 
     const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaIdGetPath, 'get');
     if (params) {
@@ -145,30 +188,76 @@ export class CategoriaService extends BaseService {
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return r as StrictHttpResponse<Categoria>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiCategoriaIdGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiCategoriaIdGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiCategoriaIdGet(params: {
+  apiCategoriaIdGet$Plain(params: {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<Categoria> {
 
-    return this.apiCategoriaIdGet$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+    return this.apiCategoriaIdGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Categoria>) => r.body as Categoria)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiCategoriaIdGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCategoriaIdGet$Json$Response(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Categoria>> {
+
+    const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaIdGetPath, 'get');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Categoria>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiCategoriaIdGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiCategoriaIdGet$Json(params: {
+    id: number;
+    context?: HttpContext
+  }
+): Observable<Categoria> {
+
+    return this.apiCategoriaIdGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Categoria>) => r.body as Categoria)
     );
   }
 
@@ -188,7 +277,7 @@ export class CategoriaService extends BaseService {
     context?: HttpContext
     body?: Categoria
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaIdPutPath, 'put');
     if (params) {
@@ -203,7 +292,7 @@ export class CategoriaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -219,10 +308,10 @@ export class CategoriaService extends BaseService {
     context?: HttpContext
     body?: Categoria
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiCategoriaIdPut$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
@@ -241,7 +330,7 @@ export class CategoriaService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<any>> {
+): Observable<StrictHttpResponse<void>> {
 
     const rb = new RequestBuilder(this.rootUrl, CategoriaService.ApiCategoriaIdDeletePath, 'delete');
     if (params) {
@@ -255,7 +344,7 @@ export class CategoriaService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<any>;
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
       })
     );
   }
@@ -270,10 +359,10 @@ export class CategoriaService extends BaseService {
     id: number;
     context?: HttpContext
   }
-): Observable<any> {
+): Observable<void> {
 
     return this.apiCategoriaIdDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<any>) => r.body as any)
+      map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }
 
