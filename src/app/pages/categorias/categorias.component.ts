@@ -19,7 +19,13 @@ export class CategoriasComponent implements OnInit {
         loadUrl: serviceUrl,
         insertUrl: serviceUrl,
         updateUrl: serviceUrl,
-        deleteUrl: serviceUrl
+        deleteUrl: serviceUrl,
+        onBeforeSend: (operation, ajaxSettings) => {
+          console.log(operation, ajaxSettings);
+          if (ajaxSettings.data.key) {
+            ajaxSettings.url += "/" + ajaxSettings.data.key;  
+          }
+        }
     });
   }
 
