@@ -19,7 +19,7 @@ export const navigation = [
     ]
   },
   {
-    text: 'Facturacion',
+    text: 'Facturación',
     path: '/facturacion',
     icon: 'money'
   },

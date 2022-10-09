@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: 'home.component.html',
@@ -6,9 +7,13 @@ import { Component } from '@angular/core';
 })
 
 export class HomeComponent {
-  constructor() {}
+  constructor(private router: Router) {}
 
-  helloWorld() {
-    alert('Hello world!');
+  navigateToFacturacion() {
+    this.router.navigate(['facturacion']);
+  }
+
+  navigateToReportes() {
+    this.router.navigate(['reportes']);
   }
 }
