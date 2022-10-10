@@ -1,37 +1,70 @@
-<h2 class="content-block">Categorias</h2>
+<div id="container">
+  <h2 class="content-block">Categorias</h2>
 
-<dx-data-grid class="dx-card wide-card" #dataGridRef
-  id="categoriasGrid"
-  [dataSource]="remoteDataSource"
-  [remoteOperations]="false"
-  [showBorders]="true"
-  [focusedRowEnabled]="true"
-  [focusedRowIndex]="0"
-  [columnAutoWidth]="true"
-  [columnHidingEnabled]="true"
-  [selectedRowKeys]="[1]">
+  <dx-data-grid class="dx-card wide-card" #dataGridRef id="categoriasGrid" [dataSource]="remoteDataSource"
+    [remoteOperations]="false" [showBorders]="true" [focusedRowEnabled]="true" [focusedRowIndex]="0"
+    [columnAutoWidth]="true" [columnHidingEnabled]="true" [selectedRowKeys]="[1]">
 
-  <dxo-selection mode="single"></dxo-selection>
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
-  <dxo-header-filter [visible]="true"></dxo-header-filter>
-  <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-selection mode="single"></dxo-selection>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
 
-  <!-- <dxo-editing
-    mode="row"
-    [allowAdding]="true"
-    [allowUpdating]="true"
-    [allowDeleting]="true"></dxo-editing> -->
-  <dxo-editing mode="row"
-    [allowDeleting]="true"></dxo-editing>
+    <!-- <dxo-editing
+      mode="row"
+      [allowAdding]="true"
+      [allowUpdating]="true"
+      [allowDeleting]="true"></dxo-editing> -->
+    <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true"></dxo-editing>
 
-  <dxi-column dataField="id" caption="Id"></dxi-column>
-  <dxi-column dataField="nombreCategoria" caption="Nombre Categoría"></dxi-column>
-  
-  <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxi-column dataField="id" caption="Id" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="nombreCategoria" caption="Nombre Categoría"></dxi-column>
 
-</dx-data-grid>
+    <dxo-paging [pageSize]="5"></dxo-paging>
 
-<div class="dx-card responsive-paddings">
-  <dx-button type="default" icon="money" text="Mostrar seleccionado" (onClick)="getCategoriaSelected()"></dx-button>
+  </dx-data-grid>
+
+
+  <div class="responsive-paddings">
+    <dx-button type="default" icon="add" text="Agregar Categoría" (onClick)="agregarCategoria()"></dx-button>
+  </div>
+
+  <dx-popup
+    [width]="500"
+    [height]="300"
+    [showTitle]="true"
+    title="Agregar Categoría"
+    [dragEnabled]="false"
+    [hideOnOutsideClick]="true"
+    [showCloseButton]="true"
+    container=".dx-viewport"
+    [(visible)]="popupVisible">
+
+    <div *dxTemplate="let data of 'content'">
+      <form (submit)="onFormSubmit($event)">
+        <dx-form
+          id="frmCrearCategoria"
+          [formData]="categoria"
+          [readOnly]="false"
+          [showColonAfterLabel]="true"
+          [showValidationSummary]="false"
+          validationGroup="categoriaData">
+
+          <dxi-item dataField="nombreCategoria">
+            <dxi-validation-rule type="required" message="El nombre de la categoría es requerido">
+            </dxi-validation-rule>
+          </dxi-item>
+
+          <dxi-item 
+            itemType="button"
+            [buttonOptions]="saveButtonOptions">
+          </dxi-item>
+
+        </dx-form>
+      </form>
+    </div>
+
+  </dx-popup>
+
 </div>
