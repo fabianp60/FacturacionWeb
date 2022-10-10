@@ -1,15 +1,20 @@
 <div id="container">
   <h2 class="content-block">Categorias</h2>
 
-  <dx-data-grid class="dx-card wide-card" #dataGridRef id="categoriasGrid" [dataSource]="remoteDataSource"
-    [remoteOperations]="false" [showBorders]="true" [focusedRowEnabled]="true" [focusedRowIndex]="0"
-    [columnAutoWidth]="true" [columnHidingEnabled]="true" [selectedRowKeys]="[1]">
+  <dx-data-grid class="dx-card wide-card" 
+    #dataGridRef 
+    id="categoriasGrid" 
+    [dataSource]="remoteDataSource"
+    [remoteOperations]="false" 
+    [showBorders]="true" 
+    [focusedRowEnabled]="true" 
+    [focusedRowIndex]="0"
+    [columnAutoWidth]="true" 
+    [columnHidingEnabled]="true">
 
-    <dxo-selection mode="single"></dxo-selection>
     <dxo-filter-row [visible]="true"></dxo-filter-row>
     <dxo-header-filter [visible]="true"></dxo-header-filter>
     <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
-    <dxo-filter-row [visible]="true"></dxo-filter-row>
 
     <!-- <dxo-editing
       mode="row"
@@ -19,7 +24,12 @@
     <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true"></dxo-editing>
 
     <dxi-column dataField="id" caption="Id" [allowEditing]="false"></dxi-column>
-    <dxi-column dataField="nombreCategoria" caption="Nombre Categoría"></dxi-column>
+    <dxi-column dataField="nombreCategoria" caption="Nombre Categoría">
+      <dxi-validation-rule
+        type="required"
+        message="El nombre de la categoría es requerido">
+      </dxi-validation-rule>
+    </dxi-column>
 
     <dxo-paging [pageSize]="5"></dxo-paging>
 

@@ -10,7 +10,7 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   navigateToFacturacion() {
-    this.router.navigate(['facturacion']);
+    this.router.navigate(['clientes']);
   }
 
   navigateToReportes() {

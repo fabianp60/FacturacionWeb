@@ -1,11 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { createStore } from 'devextreme-aspnet-data-nojquery';
-
 import { DxDataGridComponent } from 'devextreme-angular';
 import notify from 'devextreme/ui/notify';
-import { Categoria } from 'src/app/api/models';
 import { CategoriaService } from 'src/app/api/services';
-import { lastValueFrom } from 'rxjs';
+import { Categoria } from 'src/app/api/models';
 
 @Component({
   selector: 'app-categorias',
@@ -15,7 +13,6 @@ import { lastValueFrom } from 'rxjs';
 export class CategoriasComponent implements OnInit {
   remoteDataSource: any;
   @ViewChild('dataGridRef', { static: false }) dataGrid!: DxDataGridComponent;
-  selectedRowsData: any[] = [];
   /* Datos del popup */
   popupVisible = false;
   saveButtonOptions: any;
@@ -36,8 +33,9 @@ export class CategoriasComponent implements OnInit {
             ajaxSettings.contentType = "application/json";
             const keyValue = ajaxSettings.data.key;
             if(operation == "update") {
-              const newData = { id: keyValue,...JSON.parse(ajaxSettings.data.values)};
-              ajaxSettings.data = JSON.stringify(newData);
+              const rowIndex = this.dataGrid.instance.getRowIndexByKey(keyValue);
+              const rowData = this.dataGrid.instance.getVisibleRows()[rowIndex].data;
+              ajaxSettings.data = JSON.stringify(rowData);
             }
             ajaxSettings.url += "/" + keyValue;  
           }
@@ -63,9 +61,10 @@ export class CategoriasComponent implements OnInit {
         let notifyType = "error";
         if(res.ok) {
           message = `Se ha guardado la categoría ${this.categoria.nombreCategoria}`;
-          this.categoria.nombreCategoria = "";
-          notifyType = "sucess";
+          notifyType = "success";
+          this.popupVisible = false;
           this.dataGrid.instance.refresh();
+          this.categoria.nombreCategoria = "";
         }
         notify({
           message,
@@ -74,7 +73,6 @@ export class CategoriasComponent implements OnInit {
             at: 'center top',
           },
         }, notifyType, 3000);
-        this.popupVisible = false;
       });
   }
 
