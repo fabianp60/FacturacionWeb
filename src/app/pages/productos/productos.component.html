@@ -1,32 +1,125 @@
-<h2 class="content-block">Productos</h2>
+<div id="container">
+  <h2 class="content-block">Productos</h2>
 
-<dx-data-grid class="dx-card wide-card"
-  id="productosGrid"
-  [dataSource]="remoteDataSource"
-  [remoteOperations]="false"
-  [showBorders]="true"
-  [focusedRowEnabled]="true"
-  [focusedRowIndex]="0"
-  [columnAutoWidth]="true"
-  [columnHidingEnabled]="true">
+  <dx-data-grid class="dx-card wide-card"
+    #dataGridRef
+    id="productosGrid"
+    [dataSource]="remoteDataSource"
+    [remoteOperations]="false"
+    [showBorders]="true"
+    [focusedRowEnabled]="true"
+    [focusedRowIndex]="0"
+    [columnAutoWidth]="true"
+    [columnHidingEnabled]="true">
 
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
-  <dxo-header-filter [visible]="true"></dxo-header-filter>
-  <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
-  <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-filter-row [visible]="true"></dxo-filter-row>
+    <dxo-header-filter [visible]="true"></dxo-header-filter>
+    <dxo-pager [showPageSizeSelector]="true" [showInfo]="true"></dxo-pager>
 
-  <!-- <dxo-editing
-    mode="row"
-    [allowAdding]="true"
-    [allowUpdating]="true"
-    [allowDeleting]="true"></dxo-editing> -->
+    <!-- <dxo-editing
+      mode="row"
+      [allowAdding]="true"
+      [allowUpdating]="true"
+      [allowDeleting]="true"></dxo-editing> -->
+    <dxo-editing mode="form" [allowUpdating]="true" [allowDeleting]="true"></dxo-editing>
 
-  <dxi-column dataField="id" caption="Id"></dxi-column>
-  <dxi-column dataField="nombre" caption="Nombre Producto"></dxi-column>
-  <dxi-column dataField="precioUnitario" caption="Precio Unitario" format="currency" ></dxi-column>
-  <dxi-column dataField="cantidadExistencia" caption="Cantidad en Inventario"></dxi-column>
-  <dxi-column dataField="categoriaId" caption="Id Categoría"></dxi-column>
-  
-  <dxo-paging [pageSize]="5"></dxo-paging>
+    <dxi-column dataField="id" caption="Id" [allowEditing]="false"></dxi-column>
+    <dxi-column dataField="nombre" caption="Nombre Producto">
+      <dxi-validation-rule type="required" message="El nombre del producto es requerido">
+      </dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="precioUnitario" caption="Precio Unitario" format="currency">
+      <dxi-validation-rule type="required" message="El valor unitario del producto es requerido"></dxi-validation-rule>
+      <dxi-validation-rule type="numeric" message="El valor es inválido"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="cantidadExistencia" caption="Cantidad en Inventario">
+      <dxi-validation-rule type="required" message="La cantidad en existencia del producto es requerida"></dxi-validation-rule>
+      <dxi-validation-rule type="numeric" message="El valor es inválido"></dxi-validation-rule>
+    </dxi-column>
+    <dxi-column dataField="categoriaId" caption="Categoría">
+      <dxo-lookup
+        [dataSource]="categoriasData"
+        valueExpr="id"
+        displayExpr="nombreCategoria">
+      </dxo-lookup>
+      <dxi-validation-rule type="required" message="La categoría del producto es requerida"></dxi-validation-rule>
+    </dxi-column>
+    
+    <dxo-paging [pageSize]="5"></dxo-paging>
 
-</dx-data-grid>
+  </dx-data-grid>
+
+  <div class="responsive-paddings">
+    <dx-button type="default" icon="add" text="Agregar Producto" (onClick)="agregarProducto()"></dx-button>
+  </div>
+
+  <dx-popup
+    [width]="640"
+    [height]="400"
+    [showTitle]="true"
+    title="Agregar Producto"
+    [dragEnabled]="false"
+    [hideOnOutsideClick]="true"
+    [showCloseButton]="true"
+    container=".dx-viewport"
+    [(visible)]="popupVisible">
+
+    <div *dxTemplate="let data of 'content'">
+      <dx-scroll-view width="100%" height="100%">
+        <form (submit)="onFormSubmit($event)">
+          <dx-form
+            id="frmCrearProducto"
+            #frmCrearProducto
+            [formData]="producto"
+            [readOnly]="false"
+            [showColonAfterLabel]="true"
+            [showValidationSummary]="false"
+            validationGroup="productoData"
+            colCount="auto"
+            [colCountByScreen]="colCountByScreen"
+            [screenByWidth]="screen">
+
+            <dxi-item dataField="nombre">
+              <dxo-label text="Nombre del producto"></dxo-label>
+              <dxi-validation-rule type="required" message="El nombre del producto es requerido">
+              </dxi-validation-rule>
+            </dxi-item>
+            
+            <dxi-item dataField="precioUnitario" [editorOptions]="{ value: null }">
+              <dxi-validation-rule type="required" message="El valor unitario del producto es requerido"></dxi-validation-rule>
+              <dxi-validation-rule type="numeric" message="El valor es inválido"></dxi-validation-rule>
+              <dxi-validation-rule 
+                  type="compare"
+                  [comparisonTarget]="precioUnitComparison"
+                  comparisonType=">"
+                  message="El precio unitario debe ser mayor a cero">
+              </dxi-validation-rule>
+            </dxi-item>
+            
+            <dxi-item dataField="cantidadExistencia" [editorOptions]="{ value: null }">
+              <dxo-label text="Cantidad en inventario"></dxo-label>
+              <dxi-validation-rule type="required" message="La cantidad en existencia del producto es requerida"></dxi-validation-rule>
+              <dxi-validation-rule type="numeric" message="El valor es inválido"></dxi-validation-rule>
+            </dxi-item>
+            
+            <dxi-item dataField="categoriaId" 
+              editorType="dxSelectBox"
+              [editorOptions]="{ items: categorias, value:'', valueExpr: 'id', displayExpr: 'nombreCategoria' }">
+              <dxo-label text="Categoria"></dxo-label>
+              <dxi-validation-rule type="required" message="La categoría del producto es requerida"></dxi-validation-rule>
+            </dxi-item>
+
+            <dxi-item 
+              itemType="button"
+              [buttonOptions]="saveButtonOptions">
+            </dxi-item>
+
+          </dx-form>
+        </form>
+      </dx-scroll-view>
+        
+    </div>
+
+  </dx-popup>
+
+</div>

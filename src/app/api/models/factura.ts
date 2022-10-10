@@ -7,5 +7,5 @@ export interface Factura {
   clienteId: number;
   fechaExpedicion: string;
   itemsVenta?: null | Array<ItemVenta>;
-  numeroFactura: number;
+  numeroFactura?: number;
 }

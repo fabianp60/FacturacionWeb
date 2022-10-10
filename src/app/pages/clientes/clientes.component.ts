@@ -12,6 +12,7 @@ import { Cliente } from 'src/app/api/models';
 })
 export class ClientesComponent implements OnInit {
   remoteDataSource: any;
+  serviceUrl: string = "https://localhost:7254/api/Cliente";
   @ViewChild('dataGridRef', { static: false }) dataGrid!: DxDataGridComponent;
   /* Datos del popup */
   popupVisible = false;
@@ -19,7 +20,6 @@ export class ClientesComponent implements OnInit {
   closeButtonOptions: any;
   cliente: Cliente = {nombre: "", apellido: "", fechaNacimiento: "", direccion: null, telefono: null, email: null };
   onFormSubmit: any;
-  serviceUrl: string = "https://localhost:7254/api/Cliente";
   /* Datos del Form */
   maxDate: Date = new Date();
   colCountByScreen: Object;
